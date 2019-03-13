@@ -17,8 +17,11 @@ struct Node {
 
 class Shape {
 protected:
-    inline static bool compiled = false;
-    inline static unsigned int shaderProgram;
+    static bool compiled;
+    static int count;
+protected:
+    static unsigned int shaderProgram;
+
 public:
     Shape();
 

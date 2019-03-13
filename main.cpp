@@ -26,7 +26,7 @@ int main() {
 
     // glfw: 创建 GLFW 窗口
     // --------------------
-    GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", nullptr, nullptr);
     if (window == nullptr) {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
@@ -44,6 +44,7 @@ int main() {
 
     // 三角形
     auto triangle = new Triangle(-0.5f, -0.5f, 0.5f, -0.5f, 0, 0.5f);
+    auto triangle2 = new Triangle(0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0);
 
     // 渲染 loop
     // -----------
@@ -58,6 +59,7 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         triangle->Draw();
+        triangle2->Draw();
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------

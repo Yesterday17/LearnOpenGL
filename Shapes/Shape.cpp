@@ -6,6 +6,10 @@
 #include <iostream>
 #include "Shape.h"
 
+int Shape::count = 0;
+bool Shape::compiled = false;
+unsigned int Shape::shaderProgram = 0;
+
 Shape::Shape() {
     if (!compiled) {
         const char *vertexShaderSource = "#version 330 core\n"
