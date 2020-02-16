@@ -6,10 +6,16 @@ find_package(OpenGL REQUIRED)
 set(CMAKE_CXX_STANDARD 17)
 
 # Including GLAD
-include_directories(glad/include)
+include_directories(include)
 set(CMAKE_CXX_LINK_EXECUTABLE "${CMAKE_CXX_LINK_EXECUTABLE} -ldl")
 
-set(SOURCE_FILES main.cpp glad/src/glad.c Shapes/Shape.h Shapes/Triangle.cpp Shapes/Triangle.h Shapes/Shape.cpp)
+set(
+        SOURCE_FILES
+        src/main.cpp
+        lib/glad.c
+        include/simple_shape/Shape.h src/simple_shape/Triangle.cpp include/simple_shape/Triangle.h src/simple_shape/Shape.cpp
+        include/common/color.h src/common/color.cpp
+)
 
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
 

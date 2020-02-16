@@ -2,31 +2,32 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
-#include "Shapes/Triangle.h"
+#include "simple_shape/Triangle.h"
+#include "common/color.h"
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 
 void processInput(GLFWwindow *window);
 
-// settings
+// 设置
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 int main() {
-    // glfw: initialize and configure
+    // glfw: 初始化 & 配置
     // ------------------------------
     glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 #ifdef __OS_X__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // fix compilation on OS X
 #endif
 
     // glfw: 创建 GLFW 窗口
     // --------------------
-    GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", nullptr, nullptr);
+    auto window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", nullptr, nullptr);
     if (window == nullptr) {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
@@ -43,32 +44,35 @@ int main() {
     }
 
     // 三角形
-    auto triangle = new Triangle(-0.5f, -0.5f, 0.5f, -0.5f, 0, 0.5f);
-    auto triangle2 = new Triangle(0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0);
+    auto triangle = new simple_shape::Triangle(-0.5f, -0.5f, 0.5f, -0.5f, 0, 0.5f);
+    auto triangle2 = new simple_shape::Triangle(0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0);
 
     // 渲染 loop
     // -----------
     while (!glfwWindowShouldClose(window)) {
         // 处理输入
-        // -----
+        // -------
         processInput(window);
 
         // 渲染
-        // ------
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        // ----
+        // 设置清空屏幕所用的颜色
+        color c(0x99, 0x99, 0xff);
+        glClearColor(c.rf(), c.gf(), c.bf(), c.af());
+        // 清空屏幕 并用 glClearColor 的颜色填充
+        glClear(GL_COLOR_BUFFER_BIT); // GL_COLOR_BUFFER_BIT 指定深度缓存
 
         triangle->Draw();
         triangle2->Draw();
 
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-        // -------------------------------------------------------------------------------
-        glfwSwapBuffers(window);
+        // glfw: 检查并调用事件，交换缓冲
+        // ---------------------------
         glfwPollEvents();
+        glfwSwapBuffers(window);
     }
 
     // glfw: 结束程序 清理资源
-    // ------------------------------------------------------------------
+    // ---------------------
     glfwTerminate();
     return 0;
 }
